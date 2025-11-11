@@ -1,3 +1,4 @@
+# syntax=docker/dockerfile:1.4
 FROM python:3.8-alpine
 RUN adduser -D microblog
 
@@ -11,7 +12,7 @@ COPY requirements.txt microblog.py boot.sh ./
 
 RUN python -m venv .venv; .venv/bin/pip3 install -r requirements.txt
 
-ENV FLASK_APP microblog.py
+ENV FLASK_APP=microblog.py
 
 RUN chmod +x boot.sh; chown -R microblog:microblog ./
 
