@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [11.0.0]
+
 ### Added
 
 - This CHANGELOG file.
@@ -15,5 +17,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Dockerfile_test. To run the tests via docker.
 - Docker compose file to run the microblog, MySQL and tests
 - boot_test.sh.
-
-[unreleased]: https://github.com/Nalanys/DV1673_microblog/tree/feature/docker-microblog
+- CI pipeline setup for Github Actions
+- Actions badge in README
+- CD pipeline setup for Github Actions
+- Followers functionality for the webpage.
