@@ -20,7 +20,7 @@ services:
       SECRET_KEY: ${SECRET_KEY}
       DATABASE_URL: mysql+pymysql://${MYSQL_USER}:${MYSQL_PASSWORD}@mysql/${MYSQL_DATABASE}
     ports:
-      - "8000:5000"
+      - "5000:5000"
     depends_on:
       - mysql
     restart: on-failure
