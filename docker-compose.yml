@@ -1,0 +1,38 @@
+services:
+  mysql:
+    image: mysql/mysql-server:5.7
+    container_name: mysql
+    environment:
+      MYSQL_RANDOM_ROOT_PASSWORD: "YES"
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+    volumes:
+      - mysql_data:/var/lib/mysql
+    restart: always
+
+  prod:
+    build:
+      context: .
+      dockerfile: ./docker/Dockerfile_prod
+    container_name: microblog
+    environment:
+      SECRET_KEY: ${SECRET_KEY}
+      DATABASE_URL: mysql+pymysql://${MYSQL_USER}:${MYSQL_PASSWORD}@mysql/${MYSQL_DATABASE}
+    ports:
+      - "5000:5000"
+    depends_on:
+      - mysql
+    restart: on-failure
+
+  test:
+    build:
+      context: .
+      dockerfile: ./docker/Dockerfile_test
+    volumes:
+      - ./app:/home/microblog/app
+      - ./tests:/home/microblog/tests
+    
+
+volumes:
+  mysql_data:

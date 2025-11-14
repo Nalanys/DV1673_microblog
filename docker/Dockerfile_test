@@ -1,0 +1,22 @@
+
+FROM python:3.8-alpine
+RUN adduser -D microblog
+WORKDIR /home/microblog
+COPY requirements requirements
+COPY requirements/test.txt ./
+COPY Makefile boot_test.sh ./
+COPY .pylintrc ./
+COPY pytest.ini ./
+COPY .coveragerc ./
+
+RUN <<-EOF
+    apk add --no-cache make gcc musl-dev
+    python -m venv .venv
+    .venv/bin/pip install --no-cache-dir -r requirements/test.txt
+    chmod +x boot_test.sh
+    chown -R microblog:microblog ./
+EOF
+
+USER microblog
+
+ENTRYPOINT ["./boot_test.sh"]
