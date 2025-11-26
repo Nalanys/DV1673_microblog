@@ -11,9 +11,11 @@ admin_email: alai20@student.bth.se
 vmtags:
     StudentId: alai20 # Change me
 
-
-pub_ssh_key_location: '/home/alexanderw/.ssh/azure_devops.pub' # Change me, your local ssh key!
-
+testing_users:
+  - user: sofia
+    github: Nalanys
+  - user: alexander
+    github: alwwen
 
 server_user: "deploy"
 server_user_pass: "sogi20alai20" # change me

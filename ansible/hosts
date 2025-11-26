@@ -2,5 +2,5 @@
 localhost ansible_connection=local
 
 [appservers]
-app1 ansible_host=appserver1.alexanderw.me
-app2 ansible_host=appserver2.alexanderw.me
+appserver1.alexanderw.me
+appserver2.alexanderw.me
