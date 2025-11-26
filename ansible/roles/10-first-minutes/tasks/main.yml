@@ -39,9 +39,10 @@
 -   name: Add ssh-key for new user
     authorized_key:
         user: "{{ server_user }}"
+        key: "https://github.com/{{ item.github }}.keys"
         state: present
-        key: "{{ lookup('file', item) }}"
-    with_items: "{{ pub_ssh_key_location }}"
+    with_items: "{{ testing_users }}"
+    when: item.github is defined
 
 
 -   name: Add user to sudoers

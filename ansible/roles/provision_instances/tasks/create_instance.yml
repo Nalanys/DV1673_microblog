@@ -39,6 +39,29 @@
         loop_var: relative_name
     delegate_to: 127.0.0.1
 
+- name: Ensure "A" record for appserver1
+  azure_rm_dnsrecordset:
+      resource_group: "{{ resource_group }}"
+      relative_name: "appserver1"
+      zone_name: "{{ domain_name }}"
+      record_type: A
+      state: present
+      records:
+          - entry: "{{ output_ip_address.state.ip_address }}"
+  when: iname == 'appserver1'
+  delegate_to: 127.0.0.1
+
+- name: Ensure "A" record for appserver2
+  azure_rm_dnsrecordset:
+      resource_group: "{{ resource_group }}"
+      relative_name: "appserver2"
+      zone_name: "{{ domain_name }}"
+      record_type: A
+      state: present
+      records:
+          - entry: "{{ output_ip_address.state.ip_address }}"
+  when: iname == 'appserver2'
+  delegate_to: 127.0.0.1
 
 
 -   name: Create VM
@@ -49,15 +72,17 @@
         ssh_password_enabled: false
         ssh_public_keys:
             - path: "/home/{{ root_user }}/.ssh/authorized_keys"
-              key_data: "{{ lookup('file', pub_ssh_key_location) }}"
+              key_data: "{{ lookup('file', playbook_dir ~ '/files/ssh_keys/alexander.pub') }}"
+            - path: "/home/{{ root_user }}/.ssh/authorized_keys"
+              key_data: "{{ lookup('file', playbook_dir ~ '/files/ssh_keys/sofia.pub') }}"
         vm_size: Standard_B1s
         network_interfaces: "{{ iname }}-NIC"
         managed_disk_type: Standard_LRS
         os_disk_size_gb: 30
         image:
-            offer: Debian-10
-            publisher: Debian
-            sku: 10
+            offer: 0001-com-ubuntu-server-jammy
+            publisher: Canonical
+            sku: 22_04-lts-gen2
             version: latest
         tags:
             StudentId: "{{ vmtags.StudentId }}"
