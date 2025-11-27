@@ -1,6 +1,8 @@
 http {
     upstream app-hosts {
-        server {{ groups['appserver'][0] }}:8000;
+         {% for app in groups['appserver'] %}
+            server {{ app }}:8000;
+         {% endfor %}
     }
 
     access_log /var/log/nginx/access.log;
