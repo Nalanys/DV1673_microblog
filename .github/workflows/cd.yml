@@ -76,9 +76,10 @@ jobs:
     - name: Run deploy playbook
       env:
         ANSIBLE_HOST_KEY_CHECKING: "False"
-        ANSIBLE_CONFIG: "ansible/ansible.cfg"
+        ANSIBLE_CONFIG: "ansible.cfg"
       run: |
         cd ansible
+        cat ansible.cfg
         ansible-playbook -i hosts gather_instances.yml deploy_app.yml \
           --private-key=/home/runner/.ssh/id_rsa \
           --extra-vars "image_tag=${{ github.ref_name }}"
