@@ -48,9 +48,7 @@ jobs:
       with:
         python-version: "3.9"
         cache: 'pip'
-        cache-dependency-path: |
-          requirements/deploy.txt
-          ansible/requirements.yml
+        cache-dependency-path: "requirements/deploy.txt,ansible/requirements.yml"
 
     - name: Install dependencies
       run: |
