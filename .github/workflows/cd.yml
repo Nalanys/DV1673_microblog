@@ -78,6 +78,6 @@ jobs:
         ANSIBLE_HOST_KEY_CHECKING: "False"
       run: |
         cd ansible
-        ansible-playbook -i hosts deploy_app.yml \
+        ansible-playbook -i hosts gather_instances.yml deploy_app.yml \
           --private-key=/home/runner/.ssh/id_rsa \
           --extra-vars "image_tag=${{ github.ref_name }}"
