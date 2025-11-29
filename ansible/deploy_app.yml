@@ -1,5 +1,5 @@
 ---
-    -   hosts: appserver
+    -   hosts: appservers
         serial: 1 # Is this the only thing needed?
         remote_user: "deploy"
         become: yes

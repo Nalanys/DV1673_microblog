@@ -1,0 +1,29 @@
+---
+- name: Get current Docker container inspect data
+  command: docker inspect microblog
+  register: inspect_raw
+  changed_when: false
+
+- name: Extract environment variable list
+  set_fact:
+    env_list: "{{ (inspect_raw.stdout | from_json)[0].Config.Env }}"
+
+- name: Convert env list to dict
+  set_fact:
+    old_env: "{{ dict(env_list | map('split', '=', 1) | list) }}"
+
+- name: Merge env with new IMAGE_TAG
+  set_fact:
+    merged_env: "{{ old_env | combine({'IMAGE_TAG': image_tag}) }}"
+
+- name: Update Microblog container with new image
+  community.docker.docker_container:
+    name: microblog
+    image: "alai20/microblog:{{ image_tag }}"
+    pull: yes
+    state: started
+    recreate: true
+    restart_policy: on-failure
+    published_ports:
+      - "8000:5000"
+    env: "{{ merged_env }}"
