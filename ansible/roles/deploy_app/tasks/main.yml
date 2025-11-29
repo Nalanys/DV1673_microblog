@@ -2,7 +2,7 @@
 -   name: Start Microblog Container
     community.docker.docker_container:
       name: microblog
-      image: "alai20/microblog:1.0.0-prod"
+      image: "alai20/microblog:{{ image_tag }}"
       state: started
       restart_policy: on-failure
       env:
