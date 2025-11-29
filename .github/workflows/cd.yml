@@ -52,16 +52,16 @@ jobs:
           requirements/deploy.txt
           ansible/requirements.yml
 
-    - name: Force update ansible and pip packets for azure
+    - name: Setup Python virtual environment
       run: |
-        ansible-galaxy collection install azure.azcollection --force
-        pip install --upgrade msal msal-extensions azure-cli-core azure-common
-
-    - name: Install dependencies
-      run: |
+        python3 -m venv .venv
+        source .venv/bin/activate
         python -m pip install --upgrade pip
+        pip install ansible[azure] --upgrade
         pip install -r requirements/deploy.txt
         pip install -r ~/.ansible/collections/ansible_collections/azure/azcollection/requirements.txt
+        ansible-galaxy collection install azure.azcollection --force
+        pip install --upgrade msal msal-extensions azure-cli-core azure-common
         cd ansible && ansible-galaxy install -r requirements.yml
 
     - name: Setup SSH 
@@ -80,5 +80,5 @@ jobs:
         cd ansible
         ansible-playbook -i hosts gather_instances.yml deploy_app.yml \
           --private-key=/home/runner/.ssh/id_rsa \
-          --extra-vars "image_tag=${{ github.ref_name }} ansible_python_interpreter=/usr/bin/python3"
+          --extra-vars "image_tag=${{ github.ref_name }}"
 
