@@ -80,4 +80,6 @@ jobs:
         cd ansible
         ansible-playbook -i hosts gather_instances.yml deploy_app.yml \
           --private-key=/home/runner/.ssh/id_rsa \
-          --extra-vars "image_tag=${{ github.ref_name }}"
+          --extra-vars "image_tag=${{ github.ref_name }}" \
+          --config ansible/ansible.cfg
+
