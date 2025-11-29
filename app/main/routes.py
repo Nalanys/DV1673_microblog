@@ -1,6 +1,7 @@
 """
 Contains routes for main purpose of app
 """
+import os
 from datetime import datetime
 from flask import render_template, flash, redirect, url_for, request, current_app
 from flask_login import current_user, login_required
@@ -8,6 +9,7 @@ from app import db
 from app.main.forms import EditProfileForm, PostForm
 from app.models import User, Post
 from app.main import bp
+
 
 
 
@@ -123,3 +125,12 @@ def unfollow(username):
     db.session.commit()
     flash(f'You are not following {username}.')
     return redirect(url_for('main.user', username=username))
+
+@bp.route('/version')
+@login_required
+def version():
+    """
+    Check version of page
+    """
+    image_tag = os.environ.get("IMAGE_TAG", "unknown")
+    return f"Microblog version is: {image_tag}"

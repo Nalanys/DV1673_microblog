@@ -1,0 +1,13 @@
+---
+-   name: Start Microblog Container
+    community.docker.docker_container:
+      name: microblog
+      image: "alai20/microblog:{{ image_tag }}"
+      state: started
+      restart_policy: on-failure
+      env:
+        SECRET_KEY: "{{ SECRET_KEY }}"
+        DATABASE_URL: "mysql+pymysql://{{ MYSQL_USER }}:{{ MYSQL_PASSWORD }}@{{ MYSQL_HOST }}/{{ MYSQL_DATABASE }}"
+        IMAGE_TAG: "{{ image_tag }}"
+      published_ports:
+        - "8000:5000"

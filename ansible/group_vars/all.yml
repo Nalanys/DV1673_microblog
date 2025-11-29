@@ -21,3 +21,5 @@ server_user: "deploy"
 server_user_pass: "sogi20alai20" # change me
 server_user_groups:
     -   sudo
+
+image_tag: "1.2.3"
