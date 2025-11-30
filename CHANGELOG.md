@@ -7,6 +7,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+- Added install_docker role. 
+- Added deploy_db playbook. 
+- Added deploy_app playbook. 
+
+### Changed
+- Changed nessecary vairables.
+- Split appserver instances to appserver1 and appserver2.
+- Edited load-balancer.conf to dynamically fetch all appservers.
+- Switched from a Debian VM to a Ubuntu VM.
+- SSH keys are not taken from GitHub accounts.
+
 ## [11.0.0]
 
 ### Added

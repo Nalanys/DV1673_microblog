@@ -1,2 +1,6 @@
 [local]
 localhost ansible_connection=local
+
+[appservers]
+appserver1.alexanderw.me ansible_host=40.69.89.47 ansible_user=deploy
+appserver2.alexanderw.me ansible_host=40.69.91.183 ansible_user=deploy
