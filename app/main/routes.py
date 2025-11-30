@@ -127,7 +127,6 @@ def unfollow(username):
     return redirect(url_for('main.user', username=username))
 
 @bp.route('/version')
-@login_required
 def version():
     """
     Check version of page

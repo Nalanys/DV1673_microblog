@@ -27,3 +27,15 @@
     published_ports:
       - "8000:5000"
     env: "{{ merged_env }}"
+
+- name: Verify correct Microblog version
+  uri:
+    url: "http://localhost:8000/version"
+    method: GET
+    return_content: yes
+    status_code: 200
+  register: version_resp
+  retries: 10
+  delay: 3
+  until: version_resp.status == 200
+  failed_when: "'Microblog version is: ' ~ image_tag not in version_resp.content"
