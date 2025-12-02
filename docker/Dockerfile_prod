@@ -18,5 +18,8 @@ RUN chmod +x boot.sh; chown -R microblog:microblog ./
 
 USER microblog
 
+HEALTHCHECK --interval=30s --timeout=5s --start-period=5s \
+  CMD curl -f http://localhost:5000 || exit 1
+
 EXPOSE 5000
 ENTRYPOINT ["./boot.sh"]

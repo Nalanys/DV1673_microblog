@@ -8,6 +8,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+- Added Bandit to requirement list. 
+- Added "make bandit" command to run bandit on app/. 
+- Added "make trivy" command to run trivy on image and fs. 
+- Added security-check.yml workflow to run before the CD workflow. 
+
+## [12.0.16]
+
+### Added
 - Added install_docker role. 
 - Added deploy_db playbook. 
 - Added deploy_app playbook. 
@@ -18,8 +26,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Edited load-balancer.conf to dynamically fetch all appservers.
 - Switched from a Debian VM to a Ubuntu VM.
 - SSH keys are not taken from GitHub accounts.
+- Updated CD workflow to deploy application. 
 
-## [11.0.0]
+## [11.0.1]
 
 ### Added
 
@@ -33,3 +42,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Actions badge in README
 - CD pipeline setup for Github Actions
 - Followers functionality for the webpage.
+
+[Unreleased]: https://github.com/Nalanys/DV1673_microblog/tree/dev
+[12.0.16]: https://github.com/Nalanys/DV1673_microblog/tree/12.0.16
+[11.0.1]: https://github.com/Nalanys/DV1673_microblog/tree/11.0.1

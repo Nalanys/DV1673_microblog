@@ -216,3 +216,19 @@ install-deploy:
 	${pip} install -r requirements/deploy.txt
 	${pip} install -r ~/.ansible/collections/ansible_collections/azure/azcollection/requirements.txt
 	cd ansible && ansible-galaxy install -r requirements.yml --force
+
+# target: bandit                         - Run bandit on app/
+.PHONY: bandit
+bandit:
+	@bandit -r app
+
+# target: trivy                          - Run trivy commands
+.PHONY: trivy
+trivy:
+	@trivy image --scanners vuln,secret,config alai20/microblog:12.0.14
+	@trivy fs --scanners vuln,secret,config --skip-dirs .venv .
+
+# target: dockle                          - Run dockle command
+.PHONY: dockle
+dockle:
+	@dockle alai20/microblog:12.0.14
