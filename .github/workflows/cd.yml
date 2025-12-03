@@ -13,8 +13,8 @@ jobs:
   ci-tests:
     uses: ./.github/workflows/ci.yml
 
-  # security-check:
-  #   uses: ./.github/workflows/security-check.yml
+  security-check:
+    uses: ./.github/workflows/security-check.yml
 
   build-and-push:
     needs: 
