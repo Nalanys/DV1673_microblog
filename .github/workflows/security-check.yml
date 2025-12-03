@@ -31,7 +31,7 @@ jobs:
 
       - name: Install Trivy
         run: |
-          apt install trivy
+          curl -sfL https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/install.sh | sudo sh -s -- -b /usr/local/bin v0.68.1
 
       - name: Install dockle
         run: |
