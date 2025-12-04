@@ -27,13 +27,13 @@ services:
       - mysql
     restart: on-failure
 
-  test:
-    build:
-      context: .
-      dockerfile: ./docker/Dockerfile_test
-    volumes:
-      - ./app:/home/microblog/app
-      - ./tests:/home/microblog/tests
+  # test:
+  #   build:
+  #     context: .
+  #     dockerfile: ./docker/Dockerfile_test
+  #   volumes:
+  #     - ./app:/home/microblog/app
+  #     - ./tests:/home/microblog/tests
     
 
 volumes:

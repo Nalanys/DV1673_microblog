@@ -44,14 +44,26 @@ jobs:
           sudo dpkg -i dockle.deb
           rm dockle.deb
       
+      - name: Build local Docker image for security checker
+        run: |
+          docker build \
+            -f docker/Dockerfile_prod \
+            -t microblog_test/microblog:${{ github.ref_name }} \
+            .
+      
       - name: Run Bandit
         run: |
           make bandit
       
       - name: Run Trivy
         run: |
-          make trivy
+          trivy image \
+            --scanners vuln,secret,misconfig \
+            --no-progress \
+            --severity HIGH,CRITICAL \
+            --exit-code 1 \
+            microblog_test/microblog:${{ github.ref_name }}
 
       - name: Run dockle
         run: |
-          make dockle
+          dockle microblog_test/microblog:${{ github.ref_name }}
