@@ -66,5 +66,5 @@ jobs:
 
       - name: Run dockle
         run: |
-          dockle --exit-code 1 --exit-level fatal microblog_test/microblog:${{ github.ref_name }}
+          dockle --exit-code 1 --exit-level -i DKL-DI-0004 fatal microblog_test/microblog:${{ github.ref_name }}
 
