@@ -225,10 +225,11 @@ bandit:
 # target: trivy                          - Run trivy commands
 .PHONY: trivy
 trivy:
-	@trivy image --scanners vuln,secret,config alai20/microblog:12.0.14
-	@trivy fs --scanners vuln,secret,config --skip-dirs .venv .
+# 	@docker run -v /var/run/docker.sock:/var/run/docker.sock aquasec/trivy image --scanners vuln,secret,misconfig --no-progress --severity HIGH,CRITICAL --exit-code 1 alai20/microblog:13.0.2
+	@docker run -v /var/run/docker.sock:/var/run/docker.sock aquasec/trivy image --scanners vuln,secret,misconfig --no-progress --severity HIGH,CRITICAL --exit-code 1 alai20/microblog:13.0.2
+# 	@docker run --rm -v .:/repo -w /repo aquasec/trivy:latest fs --scanners vuln,secret,misconfig --severity HIGH,CRITICAL --exit-code 1 --no-progress --skip-dirs .venv,venv .
 
 # target: dockle                          - Run dockle command
 .PHONY: dockle
 dockle:
-	@dockle alai20/microblog:12.0.14
+	@dockle alai20/microblog:13.0.2
