@@ -216,3 +216,20 @@ install-deploy:
 	${pip} install -r requirements/deploy.txt
 	${pip} install -r ~/.ansible/collections/ansible_collections/azure/azcollection/requirements.txt
 	cd ansible && ansible-galaxy install -r requirements.yml --force
+
+# target: bandit                         - Run bandit on app/
+.PHONY: bandit
+bandit:
+	@bandit -r app
+
+# target: trivy                          - Run trivy commands
+.PHONY: trivy
+trivy:
+	@docker run -v /var/run/docker.sock:/var/run/docker.sock aquasec/trivy image --scanners vuln,secret,misconfig --no-progress --severity HIGH,CRITICAL --exit-code 1 alai20/microblog:13.0.10
+# 	@docker run -v /var/run/docker.sock:/var/run/docker.sock aquasec/trivy image --scanners vuln,secret,misconfig --no-progress --severity HIGH,CRITICAL --exit-code 1 microblog_test/microblog:13.0.2
+	@docker run --rm -v .:/repo -w /repo aquasec/trivy:latest fs --scanners vuln,secret,misconfig --severity HIGH,CRITICAL --exit-code 1 --no-progress --skip-dirs .venv,venv .
+
+# target: dockle                          - Run dockle command
+.PHONY: dockle
+dockle:
+	@dockle alai20/microblog:13.0.10

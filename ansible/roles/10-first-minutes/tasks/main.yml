@@ -78,6 +78,16 @@
         state: present
     # ignore_errors: yes
 
+-   name: Copy Modern OpenSSH configuration
+    remote_user: "{{ server_user }}"
+    copy:
+        src: files/sshd_config
+        dest: /etc/ssh/sshd_config
+        owner: root
+        group: root
+        mode: "0600"
+    notify: restart ssh
+
 -   name: Remove default user
     remote_user: "{{ server_user }}"
     user:
@@ -86,3 +96,4 @@
         force: yes
         remove: yes
     # ignore_errors: yes
+

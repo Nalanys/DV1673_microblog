@@ -2,7 +2,7 @@
 Contains Databse model classes
 """
 
-from hashlib import md5
+from hashlib import md5 #nosec
 from datetime import datetime
 from flask import current_app
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -21,7 +21,7 @@ class User(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True) 
     username = db.Column(db.String(64), index=True, unique=True)
     email = db.Column(db.String(120), index=True, unique=True)
-    password_hash = db.Column(db.String(128))
+    password_hash = db.Column(db.String(512))
     about_me = db.Column(db.String(140))
     last_seen = db.Column(db.DateTime, default=datetime.utcnow)
     posts = db.relationship('Post', backref='author', lazy='dynamic')
@@ -60,7 +60,7 @@ class User(UserMixin, db.Model):
         """
         Return Gravatar URL based on email
         """
-        digest = md5(self.email.lower().encode('utf-8')).hexdigest()
+        digest = md5(self.email.lower().encode('utf-8')).hexdigest() #nosec
         url = f'https://www.gravatar.com/avatar/{digest}?d=retro&s={size}'
         current_app.logger.debug(f"Get gravatar {url}")
         return url

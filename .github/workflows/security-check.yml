@@ -1,0 +1,70 @@
+name: Security Check
+
+on:
+  workflow_call: {}
+
+permissions:
+  contents: read
+  packages: write
+
+jobs:
+  security-check:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+          cache-dependency-path: |
+            requirements/prod.txt
+            requirements/test.txt
+
+      - name: Install test dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements/test.txt
+
+      - name: Install Trivy
+        run: |
+          curl -sfL https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/install.sh | sudo sh -s -- -b /usr/local/bin v0.68.1
+
+      - name: Install dockle
+        run: |
+          VERSION=$(
+            curl --silent "https://api.github.com/repos/goodwithtech/dockle/releases/latest" | \
+            grep '"tag_name":' | \
+            sed -E 's/.*"v([^"]+)".*/\1/'
+          )
+          curl -L -o dockle.deb "https://github.com/goodwithtech/dockle/releases/download/v${VERSION}/dockle_${VERSION}_Linux-64bit.deb"
+          sudo dpkg -i dockle.deb
+          rm dockle.deb
+      
+      - name: Build local Docker image for security checker
+        run: |
+          docker build \
+            -f docker/Dockerfile_prod \
+            -t microblog_test/microblog:${{ github.ref_name }} \
+            .
+      
+      - name: Run Bandit
+        run: |
+          make bandit
+      
+      - name: Run Trivy
+        run: |
+          trivy image \
+            --scanners vuln,secret,misconfig \
+            --no-progress \
+            --severity HIGH,CRITICAL \
+            --exit-code 1 \
+            microblog_test/microblog:${{ github.ref_name }}
+
+      - name: Run dockle
+        run: |
+          dockle --exit-code 1 --exit-level fatal -i DKL-DI-0004 microblog_test/microblog:${{ github.ref_name }}
+
