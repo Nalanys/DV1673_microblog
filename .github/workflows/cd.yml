@@ -19,7 +19,7 @@ jobs:
   build-and-push:
     needs: 
       - ci-tests
-      # - security-check
+      - security-check
 
     runs-on: ubuntu-latest
 

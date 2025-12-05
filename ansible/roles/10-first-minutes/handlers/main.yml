@@ -1,5 +1,7 @@
 ---
 -   name: restart ssh
+    remote_user: "{{ server_user }}"
+    become: yes
     service: 
         name: ssh
         state: restarted
