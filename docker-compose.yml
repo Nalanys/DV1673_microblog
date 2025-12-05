@@ -9,6 +9,8 @@ services:
       MYSQL_PASSWORD: ${MYSQL_PASSWORD}
     volumes:
       - mysql_data:/var/lib/mysql
+    ports:
+      - "3306:3306"
     restart: always
 
   prod:
@@ -18,20 +20,20 @@ services:
     container_name: microblog
     environment:
       SECRET_KEY: ${SECRET_KEY}
-      DATABASE_URL: mysql+pymysql://${MYSQL_USER}:${MYSQL_PASSWORD}@mysql/${MYSQL_DATABASE}
+      DATABASE_URL: mysql+pymysql://${MYSQL_USER}:${MYSQL_PASSWORD}@mysql:3306/${MYSQL_DATABASE}
     ports:
       - "5000:5000"
     depends_on:
       - mysql
     restart: on-failure
 
-  test:
-    build:
-      context: .
-      dockerfile: ./docker/Dockerfile_test
-    volumes:
-      - ./app:/home/microblog/app
-      - ./tests:/home/microblog/tests
+  # test:
+  #   build:
+  #     context: .
+  #     dockerfile: ./docker/Dockerfile_test
+  #   volumes:
+  #     - ./app:/home/microblog/app
+  #     - ./tests:/home/microblog/tests
     
 
 volumes:
