@@ -74,7 +74,20 @@ services:
       - "9090:9090"
     networks:
       - monitor
+    
+  grafana:
+    image: grafana/grafana:8.2.4
+    container_name: grafana
+    restart: unless-stopped
+    volumes:
+      - grafana-data:/var/lib/grafana
+    networks:
+      - monitor
+    ports:
+      - "3000:3000"
+    
 
 volumes:
   mysql_data:
   prometheus-data:
+  grafana-data:
