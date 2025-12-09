@@ -9,12 +9,15 @@ COPY app app
 COPY migrations migrations
 COPY requirements requirements
 COPY requirements.txt microblog.py boot.sh ./
+COPY gunicorn_config.py gunicorn_config.py
 
 RUN python -m venv .venv; .venv/bin/pip3 install -r requirements.txt
 
 ENV FLASK_APP=microblog.py
 
 RUN chmod +x boot.sh; chown -R microblog:microblog ./
+
+ENV  prometheus_multiproc_dir=/tmp
 
 USER microblog
 
