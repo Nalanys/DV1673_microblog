@@ -1,0 +1,49 @@
+---
+-   name: Copy docker compose file
+    template:
+      src: ../docker-compose.yml
+      dest: ./docker-compose.yml
+
+-   name: Copy prometheus.yml file
+    template:
+      src:  ../prometheus.yml
+      dest: ./prometheus.yml
+
+-   name: Copy rules.yml file
+    template:
+      src: ../rules.yml
+      dest: ./rules.yml
+
+-   name: Copy alertmanager.yml file
+    template:
+      src: ../alertmanager.yml
+      dest: ./alertmanager.yml
+
+-   name: Copy Grafana config
+    template:
+      src: ../grafana.ini
+      dest: ./grafana.ini
+
+-   name: Start Monitoring
+    command: sudo docker compose up  -d --build prometheus grafana alertmanager
+
+-   name: Wait for Grafana to respond
+    uri:
+      url: http://localhost:3000/api/health
+      method: GET
+      status_code: 200
+    register: grafana_status
+    retries: 20
+    delay: 5
+    until: grafana_status.status == 200
+
+-   name: Add Prometheus datasource
+    community.grafana.grafana_datasource:
+      name: Prometheus
+      ds_type: prometheus
+      access: proxy
+      url: http://localhost:3000
+      ds_url: http://localhost:9090
+      grafana_user: admin
+      grafana_password: admin
+      state: present

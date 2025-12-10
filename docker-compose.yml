@@ -86,6 +86,7 @@ services:
     restart: unless-stopped
     volumes:
       - grafana-data:/var/lib/grafana
+      - ./grafana.ini:/etc/grafana/grafana.ini
     networks:
       - monitor
     ports:

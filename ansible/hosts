@@ -2,5 +2,5 @@
 localhost ansible_connection=local
 
 [appservers]
-appserver1.alexanderw.me ansible_host=52.169.28.249 ansible_user=deploy
-appserver2.alexanderw.me ansible_host=13.79.164.147 ansible_user=deploy
+appserver1.alexanderw.me ansible_host=52.169.81.170 ansible_user=deploy
+appserver2.alexanderw.me ansible_host=52.164.207.133 ansible_user=deploy
