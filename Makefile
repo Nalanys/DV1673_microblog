@@ -151,7 +151,7 @@ exec-tests: test-unit test-integration
 # target: test                         - Run tests and display code coverage
 .PHONY: test
 test: validate exec-tests
-	${py} -m coverage report  --rcfile=.coveragerc
+	testing=yes ${py} -m coverage report  --rcfile=.coveragerc
 	$(MAKE) clean-cov
 
 
@@ -225,9 +225,9 @@ bandit:
 # target: trivy                          - Run trivy commands
 .PHONY: trivy
 trivy:
-	@docker run -v /var/run/docker.sock:/var/run/docker.sock aquasec/trivy image --scanners vuln,secret,misconfig --no-progress --severity HIGH,CRITICAL --exit-code 1 alai20/microblog:13.0.10
-# 	@docker run -v /var/run/docker.sock:/var/run/docker.sock aquasec/trivy image --scanners vuln,secret,misconfig --no-progress --severity HIGH,CRITICAL --exit-code 1 microblog_test/microblog:13.0.2
-	@docker run --rm -v .:/repo -w /repo aquasec/trivy:latest fs --scanners vuln,secret,misconfig --severity HIGH,CRITICAL --exit-code 1 --no-progress --skip-dirs .venv,venv .
+# 	@docker run -v /var/run/docker.sock:/var/run/docker.sock aquasec/trivy image --scanners vuln,secret,misconfig --no-progress --severity HIGH,CRITICAL --exit-code 1 alai20/microblog:13.0.10
+	@docker run -v /var/run/docker.sock:/var/run/docker.sock aquasec/trivy image --scanners vuln,secret,misconfig --no-progress --severity HIGH,CRITICAL --exit-code 1 dv1673_microblog-prod:latest
+# 	@docker run --rm -v .:/repo -w /repo aquasec/trivy:latest fs --scanners vuln,secret,misconfig --severity HIGH,CRITICAL --exit-code 1 --no-progress --skip-dirs .venv,venv .
 
 # target: dockle                          - Run dockle command
 .PHONY: dockle
