@@ -6,6 +6,8 @@
 -   import_playbook: 10-first-minutes.yml
 
 # # -   import_playbook: gather_instances.yml
+# -   import_playbook: deploy_monitoring.yml
+# # -   import_playbook: gather_instances.yml
 # -   import_playbook: deploy_lb.yml
 # # -   import_playbook: gather_instances.yml
 # -   import_playbook: deploy_db.yml

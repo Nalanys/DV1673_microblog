@@ -12,9 +12,8 @@ from flask_migrate import Migrate
 from flask_login import LoginManager
 from flask_moment import Moment
 from flask_bootstrap import Bootstrap
+from prometheus_flask_exporter.multiprocess import GunicornInternalPrometheusMetrics
 from app.config import ProdConfig, RequestFormatter
-
-
 
 db = SQLAlchemy()
 migrate = Migrate()
@@ -32,13 +31,14 @@ def create_app(config_class=ProdConfig):
     """
     app = Flask(__name__)
     app.config.from_object(config_class)
-
+    if config_class.ENV == "production":
+        metrics = GunicornInternalPrometheusMetrics.for_app_factory()
+        metrics.init_app(app)
     db.init_app(app)
     migrate.init_app(app, db)
     login.init_app(app)
     moment.init_app(app)
     bootstrap.init_app(app)
-    
 
     #pylint: disable=wrong-import-position, cyclic-import, import-outside-toplevel
     from app.errors import bp as errors_bp
