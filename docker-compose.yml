@@ -27,7 +27,7 @@ services:
       SECRET_KEY: ${SECRET_KEY}
       DATABASE_URL: mysql+pymysql://${MYSQL_USER}:${MYSQL_PASSWORD}@mysql:3306/${MYSQL_DATABASE}
     ports:
-      - "5000:5000"
+      - "8000:5000"
     networks:
       - monitor
     depends_on:

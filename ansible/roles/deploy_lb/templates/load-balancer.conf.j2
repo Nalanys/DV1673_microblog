@@ -31,7 +31,7 @@ server {
    }
 
    location /grafana/ {
-      proxy_pass http://40.69.222.150:3000/;
+      proxy_pass http://40.69.71.64:3000/; 
       proxy_set_header Host $host;
       proxy_set_header X-Real-IP $remote_addr;
       proxy_set_header X-Forwarded-Host $host;

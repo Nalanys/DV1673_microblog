@@ -31,7 +31,7 @@ def create_app(config_class=ProdConfig):
     """
     app = Flask(__name__)
     app.config.from_object(config_class)
-    if os.environ.get("testing") == "yes":
+    if config_class.ENV == "production":
         metrics = GunicornInternalPrometheusMetrics.for_app_factory()
         metrics.init_app(app)
     db.init_app(app)
@@ -39,7 +39,6 @@ def create_app(config_class=ProdConfig):
     login.init_app(app)
     moment.init_app(app)
     bootstrap.init_app(app)
-    
 
     #pylint: disable=wrong-import-position, cyclic-import, import-outside-toplevel
     from app.errors import bp as errors_bp

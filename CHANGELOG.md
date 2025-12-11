@@ -5,16 +5,21 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+## [14.0.2]
+### Added
 - Added node-exporter setup
 - Added prometheus setup
 - Added grafana setup
 - Added prometheus flask
 - Added alertmanager to prometheus
-- Changed the ip adresses in prometheus to match the VM:s
 - Added reverse proxy to nginx to point to Grafana
 - Added granfana config to make reverse proxy work
+- Added a button to create error to see in alertmanager
+### Changed
 - Changed ports to match security
+- Updated flask to make tests work
+- Updated rules to match our error
+- Changed the ip adresses in prometheus to match the VM:s
 
 ## [13.0.11]
 
@@ -58,6 +63,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Followers functionality for the webpage.
 
 [Unreleased]: https://github.com/Nalanys/DV1673_microblog/tree/dev
+[13.0.11]: https://github.com/Nalanys/DV1673_microblog/tree/14.0.2
 [13.0.11]: https://github.com/Nalanys/DV1673_microblog/tree/13.0.11
 [12.0.16]: https://github.com/Nalanys/DV1673_microblog/tree/12.0.16
 [11.0.1]: https://github.com/Nalanys/DV1673_microblog/tree/11.0.1
