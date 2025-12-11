@@ -37,7 +37,6 @@
     roles:
         - gather_instances
 
-
 -   name: create security groups
     hosts: local
     gather_facts: False

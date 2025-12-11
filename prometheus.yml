@@ -1,0 +1,37 @@
+global:
+  scrape_interval: 5s
+
+scrape_configs:
+  - job_name: "appserver1"
+    static_configs:
+      - targets: ['40.69.71.74:8000']
+        labels:
+          instance: appserver1
+  - job_name: "appserver2"
+    static_configs:
+      - targets: ['40.69.71.80:8000']
+        labels:
+          instance: appserver2
+  - job_name: "appservers"
+    static_configs:
+      - targets: ['40.69.71.62:8000']
+        labels:
+          instance: appservers
+  - job_name: "promethues"
+    static_configs:
+      - targets: ['0.0.0.0:9090']
+        labels:
+          instance: promethues
+  - job_name: "flask"
+    static_configs:
+    - targets: ['prod:5000']
+      labels:
+        instance: flask
+
+alerting:
+  alertmanagers:
+  - static_configs:
+    - targets:
+      - alertmanager:9093
+rule_files:
+  - rules.yml

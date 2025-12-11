@@ -133,3 +133,10 @@ def version():
     """
     image_tag = os.environ.get("IMAGE_TAG", "unknown")
     return f"Microblog version is: {image_tag}"
+
+@bp.route("/crash-test")
+def crash_test():
+    """
+    Crash test
+    """
+    raise RuntimeError("Intentional crash test for monitoring")
