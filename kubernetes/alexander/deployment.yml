@@ -16,6 +16,11 @@ spec:
       - image: alai20/microblog:14.0.2
         imagePullPolicy: Always
         name: microblog
+        resources:
+          requests:
+            cpu:  250m
+          limits:
+            cpu: 500m
         env:
           # Use secret in real usage
         - name: MYSQL_USER
